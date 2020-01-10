@@ -1,36 +1,38 @@
 """This module contains the model for shopping cart.
 """
-import json
-import copy
 import os
+import copy
+import json
+
+from collections import defaultdict
+
+# Local Imports
+from controller import (
+	cart_items_file,
+	read_user_cart_file, 
+	merge_items,
+	print_recipts
+	)
 
 
 class ShoppingCart(object):
 	"""Provides methods to interact with shopping cart."""
-	cart_items_file = "user.json"
 
 	def __init__(self):
 		super(ShoppingCart, self).__init__()
-		self.items = {}
-		self.data = {}
-		self.data["items"] = []
+		self._items = {}
+		self._data = {}
+		self._data["items"] = []
 
 	def _serialize(self):
 		"""Serialize cart items.
 		"""
-		for _, item in self.items.iteritems():
-			self.data['items'].append(item)
-		if os.path.isfile(self.cart_items_file):
-			os.remove(self.cart_items_file)
-		with open(self.cart_items_file, "a") as fh:
-			json.dump(self.data, fh, sort_keys=True, indent=4)
-
-	def _deserialize(self):
-		if os.path.isfile(self.cart_items_file):
-			with open(self.cart_items_file, "r") as jsn:
-				read_data = json.load(jsn)
-				for item in read_data["items"]:
-					yield item
+		for _, item in self._items.iteritems():
+			self._data['items'].append(item)
+		if os.path.isfile(cart_items_file):
+			os.remove(cart_items_file)
+		with open(cart_items_file, "a") as fh:
+			json.dump(self._data, fh, sort_keys=True, indent=4)
 
 	def add(self, new_items):
 		"""Adds the items to shopping cart.
@@ -38,49 +40,56 @@ class ShoppingCart(object):
 		Args:
 			new_items (dict) : item along with meta data.
 		"""
-		old_items = []
-		for item in self._deserialize():
-			if item not in new_items.values():
-				old_items.append(item)
-
-		for old in old_items:
-			new_items[old["itemcode"]] = old
-
-		self.items = new_items
+		self._items = merge_items(new_items)
 
 		if new_items:
-			self.items.update(new_items)
+			self._items.update(new_items)
 			self._serialize()
 
 	def remove(self, itemcodes):
 		"""Remove an item from the shopping cart.
+
+		Args:
+			itemcodes list(int) : list of itemcodes to remove from cart.
 		"""
 		keep_items = {}
-		print "recieved: ", itemcodes
-		for item in self._deserialize():
+		print "Removing: ", itemcodes
+		for item in read_user_cart_file():
 			if item["itemcode"] not in itemcodes:
 				keep_items[item["itemcode"]] = item
-	
-		self.items = keep_items
+		self._items = keep_items
 		self._serialize()
-
 
 	def list(self):
 		"""Lists items added in the cart.
 		"""
 		print "[\tWilko Shopping Cart\t\t]"
-		items = list(self._deserialize())
+		items = list(read_user_cart_file())
 		if not items:
 			print "Cart Empty !"
-			return
+			exit()
 		for item in items:
 			print item
 
-
-
 	def checkout(self):
 		"""Checkout cart and print recipt.
+
+		Returns:
+			list(type, costs) : checkout items with cost.
 		"""
-		pass
+		cart_items = list(read_user_cart_file())
+		if not cart_items:
+			print "Cart is empty !"
+			exit() 
+		types = defaultdict(list)
+		for datum in cart_items:
+			types[datum[u'type']].append(datum[u'cost'])
+		return types
+
+
+
+
+
+
 
 		

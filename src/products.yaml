@@ -6,11 +6,11 @@
   2:
     type: train
     name: Caron
-    cost: 10
+    cost: 5
   3:
     type: train
     name: thameslink
-    cost: 12
+    cost: 5
   4:
     type: car
     name: volvo

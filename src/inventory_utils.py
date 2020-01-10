@@ -1,5 +1,6 @@
+"""This module contains function realted to supermarket inventory.
+"""
 import yaml
-
 
 def get_products(inventory_file):
 	"""Function to read yaml file.
@@ -16,4 +17,5 @@ def get_products(inventory_file):
 
 
 if __name__ == '__main__':
+	# For testing
 	print get_products('products.yaml')

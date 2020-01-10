@@ -64,13 +64,19 @@ class ShoppingCart(object):
 		self.items = keep_items
 		self._serialize()
 
-		
 
 	def list(self):
 		"""Lists items added in the cart.
 		"""
-		if not self.items:
+		print "[\tWilko Shopping Cart\t\t]"
+		items = list(self._deserialize())
+		if not items:
 			print "Cart Empty !"
+			return
+		for item in items:
+			print item
+
+
 
 	def checkout(self):
 		"""Checkout cart and print recipt.

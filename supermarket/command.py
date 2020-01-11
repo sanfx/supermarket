@@ -43,36 +43,6 @@ class Supermarket(object):
 			"\n\t".join([cmd for cmd in dir(self) if not cmd.startswith("_")])
 		)
 
-	def add(self):
-		"""Command to add items to shopping cart.
-		"""
-		parser = argparse.ArgumentParser(
-			description='Enter the itemcode displayed to add to your shopping cart.'
-			)
-		parser.add_argument('itemcodes', 
-			nargs='+', 
-			help='Enter the item code separated by space.'
-			)
-		args = parser.parse_args(sys.argv[2:])
-		not_found = []
-
-		user_entered_codes = [int(item) for item in args.itemcodes]
-		for itemcode, value in self._products.iteritems():
-			if itemcode in user_entered_codes:
-				print value["name"].capitalize(), value["type"], "£{}".format(value["cost"])
-				self._cart_items[itemcode] = value
-
-		if self._cart_items:
-			print "Total: ", get_total_cost(self._cart_items)
-
-		for code in user_entered_codes:
-			if code not in self._products:
-				not_found.append(code)
-
-		if not_found:
-			print "Items with following code not found: {}".format(not_found)
-
-
 	def cart(self):
 		"""Command provide a subcommands to interact with shopping cart.
 		"""
@@ -86,10 +56,18 @@ class Supermarket(object):
 			parser.add_argument("-r", "--remove", nargs="+", 
 						help="Enter the item code separated by space.")
 			parser.add_argument("-c", "--checkout",  action="store_true",
-				help="checkout from cart.")
+				help="Checkout from cart.")
 			args = parser.parse_args(sys.argv[2:])
 			if args.add:
 				user_entered_codes = [int(item) for item in args.add]
+
+				for code in user_entered_codes:
+					if code not in self._products:
+						not_found.append(code)
+
+				if not_found:
+					print "Items with following code not found: {}".format(not_found)
+
 				if user_entered_codes:
 					for itemcode, value in self._products.iteritems():
 						if itemcode in user_entered_codes:
@@ -100,6 +78,7 @@ class Supermarket(object):
 					
 					if self._cart_items:
 						self._cart.add(self._cart_items)
+
 			if args.remove:
 				self._cart.remove([int(item) for item in args.remove])
 

@@ -53,7 +53,7 @@ class ShoppingCart(object):
 			itemcodes list(int) : list of itemcodes to remove from cart.
 		"""
 		keep_items = {}
-		print "Removing: ", itemcodes
+		print "Removing items with itemcode: ", itemcodes
 		for item in read_user_cart_file():
 			if item["itemcode"] not in itemcodes:
 				keep_items[item["itemcode"]] = item
@@ -75,7 +75,7 @@ class ShoppingCart(object):
 		"""Checkout cart and print recipt.
 
 		Returns:
-			list(type, costs) : checkout items with cost.
+			collection.defaultDict : checkout items with cost.
 		"""
 		cart_items = list(read_user_cart_file())
 		if not cart_items:

@@ -37,15 +37,13 @@ class Supermarket(object):
 		getattr(self, args.command)()
 
 	def _epilog(self):
-		"""Help message.
-		"""
+		"""Help message."""
 		return EPILOG.format(
 			"\n\t".join([cmd for cmd in dir(self) if not cmd.startswith("_")])
 		)
 
 	def cart(self):
-		"""Command provide a subcommands to interact with shopping cart.
-		"""
+		"""Command provide a subcommands to interact with shopping cart."""
 		if len(sys.argv) == 2:
 			self._cart.list()
 		else:
@@ -60,7 +58,7 @@ class Supermarket(object):
 			args = parser.parse_args(sys.argv[2:])
 			if args.add:
 				user_entered_codes = [int(item) for item in args.add]
-
+				not_found = []
 				for code in user_entered_codes:
 					if code not in self._products:
 						not_found.append(code)
@@ -69,13 +67,16 @@ class Supermarket(object):
 					print "Items with following code not found: {}".format(not_found)
 
 				if user_entered_codes:
+					print "Below listed items added to cart:"
+					line = "+" * 28
+					print line
 					for itemcode, value in self._products.iteritems():
 						if itemcode in user_entered_codes:
 							value.update({"itemcode": itemcode})
-							print value["name"].capitalize(), value["type"], 
+							print "*", value["name"].capitalize(), value["type"] 
 							"£{}".format(value["cost"])
 							self._cart_items[itemcode] = value
-					
+					print line
 					if self._cart_items:
 						self._cart.add(self._cart_items)
 
@@ -87,8 +88,7 @@ class Supermarket(object):
 				print_recipts(checkout_items)
 
 	def display(self):
-		"""Displays the products in the supermarket.
-		"""
+		"""Displays the products in the supermarket."""
 		print "Welcome to Wilko Supermarket ! "
 		display_shelf = {}
 
@@ -110,7 +110,5 @@ class Supermarket(object):
 
 
 def main():
-	# user interfacing class
+	# Initialize user interfacing class
 	Supermarket()
-
-

@@ -1,2 +1,2 @@
-"""Supermarket
+"""Supermarket package.
 """

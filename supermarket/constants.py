@@ -8,7 +8,7 @@ The supermarket command provides way to list items in supermarket and
  interact with shopping cart checkout system.
 
 Usage 1 runs command in text-only (CLI) mode.
-Usage 2 gives help about specific cmds.
+Usage 2 gives help about specific command.
 Usage 3 prints this general help message.
 
 COMMAND is one of:

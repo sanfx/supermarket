@@ -4,7 +4,7 @@ Install
 
     sudo  python setup.py install
 
-    First, copy products.yaml inventry file to your home directory.
+    First, copy **products.yaml** inventry file to your home directory.
 
 
 Usage
@@ -36,15 +36,15 @@ The `cart` command further has 3 commands,
 
 Here is how to use it!
 
-	[*] To display the contents of your cart:
-		`supermarket cart`
-	[*] To add items to cart:
-		`supermarket cart -a 1 2 3`
-		# where 1, 2, 3 are item codes you can see when you type `supermarket display`.
-	[*] To remove items previously selected:
-		`supermarket cart -r 1 2 3`
-	[*] To Checkout your shopping cart:
-		`supermarket cart -c`
+[*] To display the contents of your cart:
+	`supermarket cart`
+[*] To add items to cart:
+	`supermarket cart -a 1 2 3`
+	# where 1, 2, 3 are item codes you can see when you type `supermarket display`.
+[*] To remove items previously selected:
+	`supermarket cart -r 1 2 3`
+[*] To Checkout your shopping cart:
+	`supermarket cart -c`
 
 
 

@@ -2,6 +2,7 @@
 """
 import os
 import json
+import copy
 import getpass
 
 cart_items_file = os.path.join(os.getenv("HOME"), "user.json")
@@ -44,17 +45,34 @@ def print_recipts(types):
 	Args
 		types (list) : items purchased with cost
 	"""
+	print "-: Payment Recipt :-"
 	grand_total = []
+	new_total = 0
+	deal_one_msg = ""
+	types_two =  copy.deepcopy(types)
 	for item, costs in types.items():
-		# costs.pop(costs.index(min(costs)))
-		total = sum(sorted(costs[1:])) if len(costs) >= 3 else sum(costs)
-		print(u'type: {} total: {}'.format(item, total))
-		grand_total.append(total)
-		print("Deal 1 Grand Total: {}".format(sum(grand_total)))
-		sets_cost = []
-		if len(types.items()) < 3:
-			exit()
-		for item , costs in types.items():
-			sets_cost.append(sum(costs))
+		if len(costs) >= 3:
+			costs.pop(costs.index(min(costs)))
+			total = sum(costs)
+			grand_total.append(total)
+			costs = []
+			deal_one_msg = "Deal Buy 3 for price of 2: "
+			print('Type: {} Total: {}'.format(item, total))
+		else:
+			new_total -= min(costs) * -1
+			grand_total.append(new_total)
+			print('Type: {} Total: {}'.format(item, new_total))
+	sets_cost = []
+	print("{}Grand Total: {}".format(deal_one_msg, sum(grand_total)))
+	if len(types.items()) < 3:
+	 	return
+	deal_two = True
+	deal_two_msg = "3 sets: "
+	for item , _costs in types_two.items():
+		sets_cost.append(sum(_costs))
+		if len(_costs) !=3:
+			deal_two = False
+	if deal_two:
+		deal_two_msg = "Deal get 3rd set free: "
 		sets_cost.pop(sets_cost.index(min(sets_cost)))
-		print("Deal 2 Grand Total: {}".format(sum(sets_cost)))
+	print("{}Grand Total: £{}".format(deal_two_msg, sum(sets_cost)))

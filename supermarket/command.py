@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Module represets the view of supermarket and shopping 
+"""This module represets the view of supermarket and shopping 
 cart checkout system.
 """
 
@@ -17,9 +17,9 @@ from model import ShoppingCart
 class Supermarket(object):
 	"""Supermarket class containing methods that act as sub commands."""
 
-	def __init__(self, inventory_file):
+	def __init__(self):
 		super(Supermarket, self).__init__()
-		self._products = get_products(inventory_file)
+		self._products = get_products()
 		self._parser = argparse.ArgumentParser(
 			description=DESC,  usage=self._epilog())
 		self._parser.add_argument('command', help='Subcommand to run')
@@ -129,5 +129,9 @@ class Supermarket(object):
 			for product in products:
 				print product
 
+
+def main():
+	# user interfacing class
+	Supermarket()
 
 

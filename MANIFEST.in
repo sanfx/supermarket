@@ -1,0 +1,2 @@
+include scripts/supermarket README.md
+include supermarket/resource/*.yaml

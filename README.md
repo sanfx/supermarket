@@ -29,10 +29,20 @@ COMMAND is one of:
 Use Usage 2 for info about OPTIONS for each COMMAND.
 
 The `cart` command further has 3 commands, 
-    
-    add
-    remove
-    checkout
+
+`$ supermarket cart --help`
+
+	usage: supermarket [-h] [-a ADD [ADD ...]] [-r REMOVE [REMOVE ...]] [-c]
+
+	Interact with shopping cart.
+
+	optional arguments:
+	  -h, --help            show this help message and exit
+	  -a ADD [ADD ...], --add ADD [ADD ...]
+	                        Enter the item code separated by space.
+	  -r REMOVE [REMOVE ...], --remove REMOVE [REMOVE ...]
+	                        Enter the item code separated by space.
+	  -c, --checkout        Checkout from cart.
 
 Here is how to use it!
 
@@ -41,7 +51,8 @@ Here is how to use it!
 
 * To add items to cart:
 	`supermarket cart -a 1 2 3`
-	# where 1, 2, 3 are item codes you can see when you type `supermarket display`.
+
+	where 1, 2, 3 are item codes you can see when you type `supermarket display`.
 
 * To remove items previously selected:
 	`supermarket cart -r 1 2 3`

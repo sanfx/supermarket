@@ -1,7 +1,7 @@
 ---
   1:
     type: train
-    name: percy
+    name: Percy
     cost: 5
   2:
     type: train
@@ -9,15 +9,15 @@
     cost: 5
   3:
     type: train
-    name: thameslink
+    name: Alstm
     cost: 5
   4:
     type: car
-    name: volvo
+    name: Volvo
     cost: 20.5
   5:
     type: car
-    name: tesla
+    name: Tesla
     cost: 25
   6:
     type: car
@@ -25,17 +25,17 @@
     cost: 15
   7:
     type: tractor
-    name: mahindra
+    name: Mahindra
     cost: 10
   8:
     type: tractor
-    name: hmt
+    name: Hmt-trac
     cost: 10
   9:
     type: tractor
-    name: farmtrac
+    name: Farmtrac
     cost: 5
   10:
     type: ship
     cost: 55
-    name: liverpool
+    name: Annie

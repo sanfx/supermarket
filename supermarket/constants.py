@@ -20,3 +20,5 @@ Use Usage 2 for info about OPTIONS for each COMMAND.
 
 DESC = """Supermarket command provides various sub-commands to interact
  with products in the supermarket."""
+
+EMPTY_CART = "Cart is Empty !"

@@ -7,7 +7,7 @@ import argparse
 import sys
 
 # Local imports
-from controller import print_receipts
+from controller import print_receipts, read_user_cart_file
 from constants import EPILOG, DESC
 from inventory_utils import get_products
 from model import ShoppingCart
@@ -88,7 +88,7 @@ class Supermarket(object):
                         if itemcode in user_entered_codes:
                             value.update({"itemcode": itemcode})
                             print "*", value["name"].capitalize(), value["type"] 
-                            "£{}".format(value["cost"])
+                            "\xa3{}".format(value["cost"])
                             self._cart_items[itemcode] = value
                     print line
                     if self._cart_items:
@@ -100,6 +100,10 @@ class Supermarket(object):
             if args.checkout:
                 checkout_items = self._cart.checkout()
                 print_receipts(checkout_items)
+                self._cart.remove(
+                    [i["itemcode"] for i in read_user_cart_file()], 
+                    verbose=False
+                    )
 
     def display(self):
         """Displays the products in the supermarket."""
@@ -115,12 +119,17 @@ class Supermarket(object):
                 display_shelf[_type].append(product)
 
         for product_type, products in display_shelf.iteritems():
-            line = "-" * (len(product_type) + 1)
+            line = "-" * (len(product_type) + 22)
             print line
-            print "|{type}|".format(type=product_type.capitalize())
+            print "|code\t{type}s\t Price|".format(type=product_type.capitalize())
             print line
             for product in products:
-                print product
+                print u"{}\t{}\t\xa3{}".format(
+                    product["itemcode"], 
+                    product["name"], 
+                    product["cost"]
+                    )
+
 
 
 def main():
